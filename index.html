@@ -7,10 +7,10 @@
 <title>SOVS 방학 단어 랭킹전</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://sovs-rank.vercel.app/">
+<meta property="og:url" content="https://rank.sovsedu.com/">
 <meta property="og:title" content="SOVS 방학 단어 랭킹전 🏆">
 <meta property="og:description" content="이번 주 TOP3는 누구? 만점 클럽과 럭키드로우까지 — 지금 순위를 확인하세요!">
-<meta property="og:image" content="https://sovs-rank.vercel.app/og.png">
+<meta property="og:image" content="https://rank.sovsedu.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
@@ -29,7 +29,7 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 .topbar{height:6px;background:linear-gradient(90deg,#5B2AB5,var(--purple) 45%,#4B54C8);}
 .wrap{max-width:560px;margin:0 auto;padding:22px 16px 70px;}
 .hd{display:flex;align-items:center;gap:12px;}
-.hd-logo{margin-left:auto;align-self:flex-end;width:128px;height:auto;margin-bottom:2px;}
+.hd-brand-img{width:118px;height:auto;display:block;margin-bottom:3px;}
 .hd-ico{width:46px;height:46px;display:flex;align-items:center;justify-content:center;font-size:34px;flex-shrink:0;filter:drop-shadow(0 4px 8px rgba(35,35,70,.18));}
 .hd-ico img{width:46px;height:46px;object-fit:contain;}
 .hd-brand{font-size:10px;letter-spacing:3px;color:var(--purple);font-weight:700;}
@@ -189,7 +189,7 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
 @media(max-width:380px){
   .hd-title{font-size:20px;}
-  .hd-logo{width:96px;}
+  .hd-brand-img{width:104px;}
   .thead,.trow{grid-template-columns:34px 34px minmax(0,1fr) 60px 58px 40px;padding:11px 10px;}
 }
 </style>
@@ -201,11 +201,10 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
   <div class="hd">
     <div class="hd-ico"><img src="avatars/trophy.webp" alt="🏆" onerror="this.outerHTML='🏆'"></div>
     <div>
-      <div class="hd-brand">SOVS ENGLISH</div>
+      <img class="hd-brand-img" src="avatars/logo_wordmark.png" alt="SOVS ENGLISH" onerror="this.outerHTML='<div class=\'hd-brand\'>SOVS ENGLISH</div>'">
       <div class="hd-title">방학 단어 랭킹전</div>
       <div class="hd-sub" id="heroSub">2026.07.20 – 08.14</div>
     </div>
-    <img class="hd-logo" src="avatars/logo.png" alt="SOVS ENGLISH" onerror="this.remove()">
   </div>
 
   <div class="kpi">

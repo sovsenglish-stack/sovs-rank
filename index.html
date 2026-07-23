@@ -18,7 +18,7 @@
   --shadow:0 6px 22px rgba(35,35,70,.07);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;word-break:keep-all;overflow-wrap:break-word;}
 .topbar{height:6px;background:linear-gradient(90deg,#5B2AB5,var(--purple) 45%,#4B54C8);}
 .wrap{max-width:560px;margin:0 auto;padding:22px 16px 70px;}
 .hd{display:flex;align-items:center;gap:12px;}
@@ -114,12 +114,12 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 .rtable td b{color:var(--purple);}
 .rule-num{display:inline-flex;width:17px;height:17px;border-radius:50%;background:var(--pale);color:var(--purple);font-size:10px;align-items:center;justify-content:center;margin-right:7px;flex-shrink:0;vertical-align:-3px;font-weight:700;}
 .rule-sum{margin-top:11px;color:var(--purple);font-size:11.5px;background:var(--pale);border-radius:9px;padding:8px 11px;font-weight:500;}
-.modal-bg{position:fixed;inset:0;background:rgba(20,20,45,.55);display:none;align-items:flex-end;justify-content:center;z-index:50;}
+.modal-bg{position:fixed;inset:0;background:rgba(20,20,45,.55);display:none;align-items:center;justify-content:center;z-index:50;padding:20px;}
 .modal-bg.on{display:flex;}
-.modal{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:560px;max-height:80vh;overflow:auto;padding:18px 16px 26px;animation:slideup .25s ease;}
-@keyframes slideup{from{transform:translateY(36px);opacity:0;}to{transform:none;opacity:1;}}
+.modal{background:#fff;border-radius:20px;width:100%;max-width:460px;max-height:82vh;overflow:auto;padding:18px 16px 22px;box-shadow:0 24px 60px rgba(20,20,45,.35);animation:popin .22s cubic-bezier(.2,.9,.3,1.15);}
+@keyframes popin{from{transform:scale(.92) translateY(10px);opacity:0;}to{transform:none;opacity:1;}}
 .m-hd{display:flex;align-items:center;gap:11px;margin-bottom:13px;}
-.m-ava{width:48px;height:48px;border-radius:50%;background:var(--pale);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;}
+.m-ava{width:54px;height:54px;border-radius:50%;background:var(--pale);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;border:2.5px solid var(--pale);}
 .m-ava img{width:72%;height:72%;object-fit:contain;}
 .m-name{font-family:var(--num);font-size:18px;}
 .m-cls{font-size:11px;color:var(--tx2);margin-top:1px;}
@@ -138,11 +138,12 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 .empty{text-align:center;padding:44px 16px;color:var(--tx2);font-size:13px;line-height:1.8;}
 .foot{text-align:center;font-size:10.5px;color:var(--tx3);margin-top:22px;line-height:1.7;}
 .updated{font-size:10px;color:var(--tx3);text-align:right;margin-top:9px;}
-.pod-char{height:100px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:2px;}
-.pod.p1 .pod-char{height:122px;}
-.char-img{max-height:100%;max-width:100%;object-fit:contain;filter:drop-shadow(0 6px 10px rgba(35,35,70,.22));}
+.pava{width:64px;height:64px;border-radius:50%;margin:0 auto;overflow:hidden;border:3px solid var(--card);box-shadow:var(--shadow);background:var(--pale);}
+.pod.p1 .pava{width:80px;height:80px;}
+.pod.p2 .pava{background:var(--mint);}
+.pod.p3 .pava{background:var(--peach);}
 .face-img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
-.sec-ico{width:20px;height:20px;object-fit:contain;vertical-align:-4px;}
+.sec-ico{width:19px;height:19px;object-fit:contain;flex-shrink:0;}
 .medal-img{width:24px;height:24px;object-fit:contain;vertical-align:middle;}
 .pill-img{width:15px;height:15px;object-fit:contain;vertical-align:-2px;}
 .lucky-img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.25));}
@@ -176,7 +177,7 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 
   <div id="content"><div class="empty">랭킹을 불러오는 중...</div></div>
 
-  <div class="sec">랭킹전 룰</div>
+  <div class="sec"><img class="sec-ico" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Memo/3D/memo_3d.png" alt="📋" onerror="this.outerHTML='📋'"> 랭킹전 룰</div>
   <details class="rules">
     <summary>📋 룰 안내 펼쳐보기</summary>
     <div class="rules-body">
@@ -311,7 +312,7 @@ function render(){
     const realRank=pi===1?1:pi===0?2:3;
     if(!r){out+='<div></div>';return;}
     out+=`<div class="pod p${realRank}">
-      <div class="pod-char" style="cursor:pointer;" onclick="showStu('${r.en.id}','${realRank===1?'r1':'r23'}')">${avaOf(r.en,realRank===1?'r1':'r23','full')}</div>
+      <div class="pava" style="cursor:pointer;" onclick="showStu('${r.en.id}','${realRank===1?'r1':'r23'}')">${avaOf(r.en,realRank===1?'r1':'r23','face')}</div>
       <div><span class="name-pill">${esc(r.en.mask)}</span></div>
       <div class="pod-cls">${esc(r.en.cls)}</div>
       <div class="column">

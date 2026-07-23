@@ -131,10 +131,10 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 .modal{background:#fff;border-radius:20px;width:100%;max-width:460px;max-height:82vh;overflow:auto;padding:18px 16px 22px;box-shadow:0 24px 60px rgba(20,20,45,.35);animation:popin .22s cubic-bezier(.2,.9,.3,1.15);}
 @keyframes popin{from{transform:scale(.92) translateY(10px);opacity:0;}to{transform:none;opacity:1;}}
 .m-hd{display:flex;align-items:center;gap:11px;margin-bottom:13px;}
-.m-ava{width:54px;height:54px;border-radius:50%;background:var(--pale);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;border:2.5px solid var(--pale);}
+.m-ava{width:84px;height:84px;border-radius:50%;background:var(--pale);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;border:3px solid var(--purpleL);box-shadow:0 6px 16px rgba(123,42,232,.22);}
 .m-ava img{width:72%;height:72%;object-fit:contain;}
-.m-name{font-family:var(--num);font-size:18px;}
-.m-cls{font-size:11px;color:var(--tx2);margin-top:1px;}
+.m-name{font-family:var(--num);font-size:21px;}
+.m-cls{font-size:12px;color:var(--tx2);margin-top:2px;}
 .m-close{margin-left:auto;width:30px;height:30px;border-radius:50%;background:var(--bg);border:none;color:var(--tx2);font-size:15px;cursor:pointer;flex-shrink:0;}
 .m-sum{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:13px;}
 .m-sum-card{background:var(--bg);border-radius:11px;padding:10px 6px;text-align:center;}
@@ -221,7 +221,7 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
     <div class="rules-body">
       <div><span class="rule-num">1</span><b>점수</b> = 정답률. 범위·횟수 상관없이 <b>정확도</b>로만!</div>
       <div style="margin-top:9px;"><span class="rule-num">2</span><b>주간 점수</b> = 그 주 평균 정답률 (만점 100P · 미응시 주 <b>0P</b>)</div>
-      <div style="margin-top:9px;"><span class="rule-num">3</span><b>최종</b> = 4주 주간 점수 합산 (만점 400P). TOP 5까지 공개해요.</div>
+      <div style="margin-top:9px;"><span class="rule-num">3</span><b>최종</b> = 4주 주간 점수 합산 (만점 400P). TOP 6까지 공개해요.</div>
       <div style="margin-top:9px;"><span class="rule-num">4</span><b>같은 점수라면?</b> 기간 동안 <b>누적 DAY(외운 단어 범위의 합)</b>가 많은 사람이 위! 넓은 범위에 도전하거나 자주 응시할수록 DAY가 쌓여요. 단, 범위를 넓히면 틀릴 위험도 커지니 전략적으로 🎯</div>
       <div style="margin-top:9px;"><span class="rule-num">5</span><b>이번 주 TOP 3</b> — 매주 월요일 리셋, 누구에게나 새 기회!</div>
       <div style="margin-top:9px;"><span class="rule-num">6</span><b>만점 클럽</b> — 이번 주에 만점(50/50)을 받으면 인원 제한 없이 전원 이름이 올라가요.</div>
@@ -358,7 +358,7 @@ function render(){
   countUp(document.getElementById('kpiT'),ranked.reduce((a,r)=>a+r.st.cnt,0),0,'<small> 회</small>');
 
   /* ── 누적 TOP 3 시상대 ── */
-  const top5=ranked.slice(0,5);
+  const top5=ranked.slice(0,6);
   const top3=top5.slice(0,3);
   const podOrder=[top3[1],top3[0],top3[2]];
   let out=`<div class="sec">${fimg('Crown/3D/crown_3d.png','👑','sec-ico')} 누적 TOP 3</div><div class="podium">`;
@@ -380,7 +380,7 @@ function render(){
 
   /* ── 4~5위 ── */
   if(top5.length>3){
-    out+=`<div class="sec">${fimg('Trophy/3D/trophy_3d.png','🏆','sec-ico')} 랭킹 4위 – 5위</div><div class="table">`;
+    out+=`<div class="sec">${fimg('Trophy/3D/trophy_3d.png','🏆','sec-ico')} 랭킹 4위 – 6위</div><div class="table">`;
     out+='<div class="thead"><span style="text-align:center;">순위</span><span></span><span>이름</span><span>반</span><span style="text-align:right;">포인트</span><span style="text-align:right;">변동</span></div>';
     top5.slice(3).forEach((r,idx)=>{
       const rank=idx+4;

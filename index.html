@@ -29,6 +29,7 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 .topbar{height:6px;background:linear-gradient(90deg,#5B2AB5,var(--purple) 45%,#4B54C8);}
 .wrap{max-width:560px;margin:0 auto;padding:22px 16px 70px;}
 .hd{display:flex;align-items:center;gap:12px;}
+.hd-logo{margin-left:auto;align-self:flex-end;width:128px;height:auto;margin-bottom:2px;}
 .hd-ico{width:46px;height:46px;display:flex;align-items:center;justify-content:center;font-size:34px;flex-shrink:0;filter:drop-shadow(0 4px 8px rgba(35,35,70,.18));}
 .hd-ico img{width:46px;height:46px;object-fit:contain;}
 .hd-brand{font-size:10px;letter-spacing:3px;color:var(--purple);font-weight:700;}
@@ -36,10 +37,7 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 .hd-sub{font-size:11px;color:var(--tx2);margin-top:2px;}
 .kpi{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-top:16px;}
 .kpi-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 8px 11px;text-align:center;box-shadow:var(--shadow);}
-.kpi-ico{width:30px;height:30px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:14px;}
-.kpi-ico.pu{background:var(--pale);}
-.kpi-ico.gr{background:#E4F8ED;}
-.kpi-ico.rd{background:#FEE7EC;}
+.kpi-3d{width:34px;height:34px;object-fit:contain;margin:0 auto 5px;display:block;filter:drop-shadow(0 3px 5px rgba(35,35,70,.15));font-size:26px;line-height:34px;text-align:center;}
 .kpi-lbl{font-size:10.5px;color:var(--tx2);}
 .kpi-val{font-family:var(--num);font-size:21px;font-weight:400;margin-top:2px;color:var(--tx);}
 .kpi-val small{font-family:'Pretendard Variable',Pretendard,sans-serif;font-size:11px;font-weight:500;color:var(--tx2);}
@@ -110,7 +108,7 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 .draw-roll{font-family:var(--num);font-size:21px;min-height:28px;}
 .draw-sub{font-size:11px;opacity:.85;margin-top:3px;}
 .draw-win .draw-roll{font-size:24px;color:#FFD98A;}
-.lucky-ico{font-size:32px;line-height:1;flex-shrink:0;animation:bob 2.8s ease-in-out infinite;}
+.lucky-ico{font-size:32px;line-height:1;flex-shrink:0;animation:wiggle 2.4s ease-in-out infinite;transform-origin:50% 40%;}
 .lucky-title{font-family:var(--num);font-size:16px;}
 .lucky-desc{font-size:11.5px;opacity:.85;margin-top:3px;line-height:1.6;}
 .lucky-stat{background:rgba(255,255,255,.14);border-radius:9px;padding:7px 11px;margin-top:9px;font-size:12px;display:inline-block;}
@@ -168,9 +166,30 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 .lucky-img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.25));}
 @keyframes rise{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
 @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
+@keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
+@keyframes flicker{0%,100%{transform:scale(1) rotate(-2deg);}30%{transform:scale(1.12) rotate(2deg);}60%{transform:scale(1.04) rotate(-1deg);}}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+@keyframes wiggle{0%,100%{transform:rotate(-7deg);}50%{transform:rotate(7deg);}}
+@keyframes swing{0%,100%{transform:rotate(-7deg);}50%{transform:rotate(7deg);}}
+/* 요소별 모션 */
+.kpi-card:nth-child(1) .kpi-3d{animation:floaty 3.4s ease-in-out infinite;}
+.kpi-card:nth-child(2) .kpi-3d{animation:floaty 3.4s ease-in-out .5s infinite;}
+.kpi-card:nth-child(3) .kpi-3d{animation:floaty 3.4s ease-in-out 1s infinite;}
+.pod.p1 .pava{animation:floaty 3.6s ease-in-out infinite;}
+.pod.p2 .pava{animation:floaty 3.6s ease-in-out .4s infinite;}
+.pod.p3 .pava{animation:floaty 3.6s ease-in-out .8s infinite;}
+.ico-flicker{animation:flicker 1.6s ease-in-out infinite;transform-origin:50% 85%;}
+.ico-pulse{animation:pulse 2s ease-in-out infinite;}
+.ico-wiggle{animation:wiggle 2.4s ease-in-out infinite;transform-origin:50% 40%;}
+.medal-img{animation:swing 2.6s ease-in-out infinite;transform-origin:50% 8%;}
+.club-pill .pill-img{animation:pulse 2.2s ease-in-out infinite;}
+.club-pill:nth-child(2n) .pill-img{animation-delay:.55s;}
+.club-pill:nth-child(3n) .pill-img{animation-delay:1.1s;}
+.hof-medal{animation:swing 2.8s ease-in-out infinite;transform-origin:50% 8%;}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
 @media(max-width:380px){
   .hd-title{font-size:20px;}
+  .hd-logo{width:96px;}
   .thead,.trow{grid-template-columns:34px 34px minmax(0,1fr) 60px 58px 40px;padding:11px 10px;}
 }
 </style>
@@ -186,12 +205,13 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
       <div class="hd-title">방학 단어 랭킹전</div>
       <div class="hd-sub" id="heroSub">2026.07.20 – 08.14</div>
     </div>
+    <img class="hd-logo" src="avatars/logo.png" alt="SOVS ENGLISH" onerror="this.remove()">
   </div>
 
   <div class="kpi">
-    <div class="kpi-card"><div class="kpi-ico pu"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke="#7B2AE8"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/></svg></div><div class="kpi-lbl">참가 학생</div><div class="kpi-val" id="kpiN">--<small> 명</small></div></div>
-    <div class="kpi-card"><div class="kpi-ico gr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke="#16A34A"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div><div class="kpi-lbl">총 응시</div><div class="kpi-val" id="kpiT">--<small> 회</small></div></div>
-    <div class="kpi-card"><div class="kpi-ico rd"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke="#E11D48"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><div class="kpi-lbl" id="ddayLbl">종료까지</div><div class="kpi-val" id="ddayVal">--</div></div>
+    <div class="kpi-card"><img class="kpi-3d" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Graduation%20cap/3D/graduation_cap_3d.png" alt="🎓" onerror="this.outerHTML='🎓'"><div class="kpi-lbl">참가 학생</div><div class="kpi-val" id="kpiN">--<small> 명</small></div></div>
+    <div class="kpi-card"><img class="kpi-3d" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Writing%20hand/Default/3D/writing_hand_3d_default.png" alt="✍️" onerror="this.outerHTML='✍️'"><div class="kpi-lbl">총 응시</div><div class="kpi-val" id="kpiT">--<small> 회</small></div></div>
+    <div class="kpi-card"><img class="kpi-3d" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Hourglass%20not%20done/3D/hourglass_not_done_3d.png" alt="⏳" onerror="this.outerHTML='⏳'"><div class="kpi-lbl" id="ddayLbl">종료까지</div><div class="kpi-val" id="ddayVal">--</div></div>
   </div>
 
   <div id="content"><div class="empty">랭킹을 불러오는 중...</div></div>
@@ -276,6 +296,22 @@ function rankCalc(tests){
   };
 }
 
+/* 숫자 카운트업 (모션 축소 설정 시 즉시 표시) */
+function countUp(el,target,dec,suffix){
+  if(!el)return;
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    el.innerHTML=target.toFixed(dec)+suffix;return;
+  }
+  const t0=performance.now(),dur=850;
+  (function f(t){
+    const p=Math.min((t-t0)/dur,1);
+    const e=1-Math.pow(1-p,3);
+    el.innerHTML=(target*e).toFixed(dec)+suffix;
+    if(p<1)requestAnimationFrame(f);
+    else el.innerHTML=target.toFixed(dec)+suffix;
+  })(t0);
+}
+
 function toggleClub(){
   const p=document.getElementById('clubPills'),b=document.getElementById('clubMore');
   if(!p||!b)return;
@@ -319,8 +355,8 @@ function render(){
       return b.st.cnt-a.st.cnt;
     });
 
-  document.getElementById('kpiN').innerHTML=ranked.length+'<small> 명</small>';
-  document.getElementById('kpiT').innerHTML=ranked.reduce((a,r)=>a+r.st.cnt,0)+'<small> 회</small>';
+  countUp(document.getElementById('kpiN'),ranked.length,0,'<small> 명</small>');
+  countUp(document.getElementById('kpiT'),ranked.reduce((a,r)=>a+r.st.cnt,0),0,'<small> 회</small>');
 
   /* ── 누적 TOP 3 시상대 ── */
   const top5=ranked.slice(0,5);
@@ -374,7 +410,7 @@ function render(){
     .filter(r=>r.wp&&r.wp.n>0)
     .sort((a,b)=>(b.wp.p-a.wp.p)||((b.wp.ds||0)-(a.wp.ds||0)))
     .slice(0,3);
-  out+=`<div class="sec">${fimg('Fire/3D/fire_3d.png','🔥','sec-ico')} 이번 주 TOP 3 <span class="tag">${wi+1}주차 · 매주 월요일 리셋!</span></div>`;
+  out+=`<div class="sec">${fimg('Fire/3D/fire_3d.png','🔥','sec-ico ico-flicker')} 이번 주 TOP 3 <span class="tag">${wi+1}주차 · 매주 월요일 리셋!</span></div>`;
   if(wTop.length){
     out+='<div class="table">';
     out+='<div class="thead"><span style="text-align:center;">순위</span><span></span><span>이름</span><span>반</span><span style="text-align:right;">포인트</span><span style="text-align:right;">응시</span></div>';
@@ -416,7 +452,7 @@ function render(){
   const club=ranked
     .filter(r=>(r.en.tests||[]).some(t=>t.d>=wk[0]&&t.d<=wk[1]&&t.t>0&&t.s>=t.t))
     .sort((a,b)=>a.en.mask.localeCompare(b.en.mask,'ko'));
-  out+=`<div class="sec">${fimg('Hundred%20points/3D/hundred_points_3d.png','💯','sec-ico')} 이번 주 만점 클럽 <span class="tag">50개 중 50개 · 전원 등재</span></div><div class="club">`;
+  out+=`<div class="sec">${fimg('Hundred%20points/3D/hundred_points_3d.png','💯','sec-ico ico-pulse')} 이번 주 만점 클럽 <span class="tag">50개 중 50개 · 전원 등재</span></div><div class="club">`;
   if(club.length){
     out+=`<div class="club-pills${club.length>4?' collapsed':''}" id="clubPills">`;
     club.forEach(r=>{out+=`<span class="club-pill" style="cursor:pointer;" onclick="showStu('${r.en.id}','week')">${fimg('Hundred%20points/3D/hundred_points_3d.png','💯','pill-img')} <span class="cp-name">${esc(r.en.mask)}</span> <small>${esc(r.en.cls)}</small></span>`;});
@@ -434,7 +470,7 @@ function render(){
     .sort((a,b)=>a.en.id<b.en.id?-1:1);
   const todayStr=(()=>{const t=new Date();return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;})();
   const ended=todayStr>(_data?.period?.end||'2026-08-14');
-  out+=`<div class="sec">${fimg('Wrapped%20gift/3D/wrapped_gift_3d.png','🎁','sec-ico')} 럭키드로우</div>
+  out+=`<div class="sec">${fimg('Wrapped%20gift/3D/wrapped_gift_3d.png','🎁','sec-ico ico-wiggle')} 럭키드로우</div>
   <div class="lucky">
     <div style="display:flex;align-items:center;gap:14px;">
       <div class="lucky-ico">${fimg('Wrapped%20gift/3D/wrapped_gift_3d.png','🎁','lucky-img')}</div>
@@ -453,6 +489,10 @@ function render(){
     out+=`<div class="updated">마지막 업데이트 ${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}</div>`;
   }
   el.innerHTML=out;
+  document.querySelectorAll('.col-pts').forEach(e=>{
+    const v=parseFloat((e.textContent||'').replace(/[^\d.]/g,''));
+    if(!isNaN(v))countUp(e,v,Number.isInteger(v)?0:1,'<small>P</small>');
+  });
 }
 
 let _eligible=[],_lastRanked=[];

@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta name="robots" content="noindex,nofollow">
 <title>SOVS 방학 단어 랭킹전</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sovs-rank.vercel.app/">
+<meta property="og:title" content="SOVS 방학 단어 랭킹전 🏆">
+<meta property="og:description" content="이번 주 TOP3는 누구? 만점 클럽과 럭키드로우까지 — 지금 순위를 확인하세요!">
+<meta property="og:image" content="https://sovs-rank.vercel.app/og.png">
+<meta name="twitter:card" content="summary_large_image">
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <style>
@@ -36,7 +43,7 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 .kpi-lbl{font-size:10.5px;color:var(--tx2);}
 .kpi-val{font-family:var(--num);font-size:21px;font-weight:400;margin-top:2px;color:var(--tx);}
 .kpi-val small{font-family:'Pretendard Variable',Pretendard,sans-serif;font-size:11px;font-weight:500;color:var(--tx2);}
-.sec{display:flex;align-items:center;gap:8px;margin:26px 0 14px;font-family:var(--num);font-size:15px;font-weight:400;letter-spacing:.3px;}
+.sec{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:26px 0 14px;font-family:var(--num);font-size:15px;font-weight:400;letter-spacing:.3px;}
 .sec::before{content:'';width:4px;height:16px;border-radius:2px;background:var(--purple);}
 .sec .tag{font-family:'Pretendard Variable',Pretendard,sans-serif;font-size:10.5px;color:var(--tx2);font-weight:500;margin-left:2px;}
 .podium{display:grid;grid-template-columns:1fr 1.08fr 1fr;gap:9px;align-items:end;padding-top:10px;}
@@ -79,6 +86,13 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 .w-cls{font-size:10px;color:var(--tx2);}
 .w-pts{font-family:var(--num);color:var(--purple);text-align:right;font-size:15px;}
 .w-pts small{font-family:'Pretendard Variable',Pretendard,sans-serif;font-size:9.5px;color:var(--tx3);}
+.hof{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;}
+.hof-row{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid var(--line);font-size:12.5px;flex-wrap:wrap;}
+.hof-row:last-child{border-bottom:none;}
+.hof-week{font-family:var(--num);font-size:13px;color:var(--purple);background:var(--pale);border-radius:8px;padding:3px 9px;flex-shrink:0;}
+.hof-names{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.hof-medal{width:17px;height:17px;object-fit:contain;vertical-align:-3px;}
+.hof-dot{color:var(--tx3);margin:0 2px;}
 .club{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px;box-shadow:var(--shadow);}
 .club-pills{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
 .club-pill{display:flex;align-items:center;justify-content:center;gap:4px;background:#FFF7E8;border:1px solid #FFE2AE;color:#8A5B00;font-size:11.5px;font-weight:700;border-radius:999px;padding:6px 8px;animation:rise .4s ease both;min-width:0;white-space:nowrap;}
@@ -379,13 +393,33 @@ function render(){
     out+='<div class="club"><div class="club-empty">이번 주 첫 시험이 아직이에요.<br>지금 응시하면 이번 주 1위! 🏃</div></div>';
   }
 
+  /* ── 지난 주 명예의 전당 (종료된 주차별 TOP3) ── */
+  if(wi>0){
+    let hofRows='';
+    for(let w=0;w<wi;w++){
+      const wt=ranked
+        .map(r=>({en:r.en,wp:r.st.weekly[w]}))
+        .filter(r=>r.wp&&r.wp.n>0)
+        .sort((a,b)=>(b.wp.p-a.wp.p)||((b.wp.ds||0)-(a.wp.ds||0)))
+        .slice(0,3);
+      if(!wt.length)continue;
+      const names=wt.map((r,i)=>`${fimg(MEDALS[i][0],MEDALS[i][1],'hof-medal')} <b>${esc(r.en.mask)}</b>`).join('<span class="hof-dot">·</span>');
+      hofRows+=`<div class="hof-row"><span class="hof-week">${w+1}주차</span><span class="hof-names">${names}</span></div>`;
+    }
+    if(hofRows){
+      out+=`<div class="sec">${fimg('Classical%20building/3D/classical_building_3d.png','🏛️','sec-ico')} 명예의 전당 <span class="tag">지난 주 챔피언들</span></div><div class="hof">${hofRows}</div>`;
+    }
+  }
+
   /* ── 이번 주 만점 클럽 (50/50 전원) ── */
   const wk=_weeks[wi];
-  const club=ranked.filter(r=>(r.en.tests||[]).some(t=>t.d>=wk[0]&&t.d<=wk[1]&&t.t>0&&t.s>=t.t));
+  const club=ranked
+    .filter(r=>(r.en.tests||[]).some(t=>t.d>=wk[0]&&t.d<=wk[1]&&t.t>0&&t.s>=t.t))
+    .sort((a,b)=>a.en.mask.localeCompare(b.en.mask,'ko'));
   out+=`<div class="sec">${fimg('Hundred%20points/3D/hundred_points_3d.png','💯','sec-ico')} 이번 주 만점 클럽 <span class="tag">50개 중 50개 · 전원 등재</span></div><div class="club">`;
   if(club.length){
     out+=`<div class="club-pills${club.length>4?' collapsed':''}" id="clubPills">`;
-    club.forEach(r=>{out+=`<span class="club-pill">${fimg('Hundred%20points/3D/hundred_points_3d.png','💯','pill-img')} <span class="cp-name">${esc(r.en.mask)}</span> <small>${esc(r.en.cls)}</small></span>`;});
+    club.forEach(r=>{out+=`<span class="club-pill" style="cursor:pointer;" onclick="showStu('${r.en.id}','week')">${fimg('Hundred%20points/3D/hundred_points_3d.png','💯','pill-img')} <span class="cp-name">${esc(r.en.mask)}</span> <small>${esc(r.en.cls)}</small></span>`;});
     out+='</div>';
     if(club.length>4)out+=`<button class="club-more" id="clubMore" onclick="toggleClub()">전체 ${club.length}명 보기 ▾</button>`;
   }else{

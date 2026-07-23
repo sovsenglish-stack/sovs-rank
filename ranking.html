@@ -46,7 +46,10 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 .sec::before{content:'';width:4px;height:16px;border-radius:2px;background:var(--purple);}
 .sec .tag{font-family:'Pretendard Variable',Pretendard,sans-serif;font-size:10.5px;color:var(--tx2);font-weight:500;margin-left:2px;}
 .podium{display:grid;grid-template-columns:1fr 1.08fr 1fr;gap:9px;align-items:end;padding-top:10px;}
-.pod{display:flex;flex-direction:column;text-align:center;animation:rise .5s ease both;}
+.pod{display:flex;flex-direction:column;text-align:center;animation:rise .5s ease both;position:relative;}
+.spark{position:absolute;width:30px;height:30px;top:56px;z-index:3;pointer-events:none;}
+.sp-l{left:2px;}
+.sp-r{right:2px;}
 .pod.p2{animation-delay:.1s;}.pod.p3{animation-delay:.18s;}
 .crown{font-size:21px;line-height:1;margin-bottom:2px;animation:bob 2.8s ease-in-out infinite;}
 .name-pill{display:inline-block;background:var(--purple);color:#fff;font-size:11.5px;font-weight:700;border-radius:999px;padding:4px 12px;margin:-11px auto 0;position:relative;box-shadow:0 3px 8px rgba(123,42,232,.3);max-width:96%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
@@ -106,10 +109,11 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 .draw-btn:active{transform:scale(.98);}
 .draw-btn:disabled{background:rgba(255,255,255,.18);color:rgba(255,255,255,.65);cursor:not-allowed;box-shadow:none;font-family:'Pretendard Variable',Pretendard,sans-serif;font-size:12.5px;font-weight:600;}
 .draw-stage{display:none;margin-top:11px;background:rgba(255,255,255,.13);border-radius:12px;padding:14px;text-align:center;}
+.draw-anim{width:34px;height:34px;vertical-align:-8px;}
 .draw-roll{font-family:var(--num);font-size:21px;min-height:28px;}
 .draw-sub{font-size:11px;opacity:.85;margin-top:3px;}
 .draw-win .draw-roll{font-size:24px;color:#FFD98A;}
-.lucky-ico{font-size:32px;line-height:1;flex-shrink:0;animation:wiggle 2.4s ease-in-out infinite;transform-origin:50% 40%;}
+.lucky-ico{font-size:32px;line-height:1;flex-shrink:0;}
 .lucky-title{font-family:var(--num);font-size:16px;}
 .lucky-desc{font-size:11.5px;opacity:.85;margin-top:3px;line-height:1.6;}
 .lucky-stat{background:rgba(255,255,255,.14);border-radius:9px;padding:7px 11px;margin-top:9px;font-size:12px;display:inline-block;}
@@ -173,21 +177,16 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 @keyframes wiggle{0%,100%{transform:rotate(-7deg);}50%{transform:rotate(7deg);}}
 @keyframes swing{0%,100%{transform:rotate(-7deg);}50%{transform:rotate(7deg);}}
 /* 요소별 모션 */
-.kpi-card:nth-child(1) .kpi-3d{animation:floaty 3.4s ease-in-out infinite;}
-.kpi-card:nth-child(2) .kpi-3d{animation:floaty 3.4s ease-in-out .5s infinite;}
-.kpi-card:nth-child(3) .kpi-3d{animation:floaty 3.4s ease-in-out 1s infinite;}
 .pod.p1 .pava{animation:floaty 3.6s ease-in-out infinite;}
 .pod.p2 .pava{animation:floaty 3.6s ease-in-out .4s infinite;}
 .pod.p3 .pava{animation:floaty 3.6s ease-in-out .8s infinite;}
 .ico-flicker{animation:flicker 1.6s ease-in-out infinite;transform-origin:50% 85%;}
 .ico-pulse{animation:pulse 2s ease-in-out infinite;}
 .ico-wiggle{animation:wiggle 2.4s ease-in-out infinite;transform-origin:50% 40%;}
-.medal-img{animation:swing 2.6s ease-in-out infinite;transform-origin:50% 8%;}
 .pill-ava{width:24px;height:24px;border-radius:50%;overflow:hidden;flex-shrink:0;background:#FFF;display:inline-flex;}
 .club-pill .pill-img,.club-pill .pill-ava{animation:pulse 2.2s ease-in-out infinite;}
 .club-pill:nth-child(2n) .pill-img{animation-delay:.55s;}
 .club-pill:nth-child(3n) .pill-img{animation-delay:1.1s;}
-.hof-medal{animation:swing 2.8s ease-in-out infinite;transform-origin:50% 8%;}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
 @media(max-width:380px){
   .hd-title{font-size:20px;}
@@ -211,9 +210,9 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
   </div>
 
   <div class="kpi">
-    <div class="kpi-card"><img class="kpi-3d" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Graduation%20cap/3D/graduation_cap_3d.png" alt="🎓" onerror="this.outerHTML='🎓'"><div class="kpi-lbl">참가 학생</div><div class="kpi-val" id="kpiN">--<small> 명</small></div></div>
-    <div class="kpi-card"><img class="kpi-3d" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Writing%20hand/Default/3D/writing_hand_3d_default.png" alt="✍️" onerror="this.outerHTML='✍️'"><div class="kpi-lbl">총 응시</div><div class="kpi-val" id="kpiT">--<small> 회</small></div></div>
-    <div class="kpi-card"><img class="kpi-3d" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Hourglass%20not%20done/3D/hourglass_not_done_3d.png" alt="⏳" onerror="this.outerHTML='⏳'"><div class="kpi-lbl" id="ddayLbl">종료까지</div><div class="kpi-val" id="ddayVal">--</div></div>
+    <div class="kpi-card"><img class="kpi-3d" src="avatars/anim_book.webp" alt="📚" onerror="this.outerHTML='📚'"><div class="kpi-lbl">참가 학생</div><div class="kpi-val" id="kpiN">--<small> 명</small></div></div>
+    <div class="kpi-card"><img class="kpi-3d" src="avatars/anim_rocket.webp" alt="🚀" onerror="this.outerHTML='🚀'"><div class="kpi-lbl">총 응시</div><div class="kpi-val" id="kpiT">--<small> 회</small></div></div>
+    <div class="kpi-card"><img class="kpi-3d" src="avatars/anim_cal.webp" alt="📅" onerror="this.outerHTML='📅'"><div class="kpi-lbl" id="ddayLbl">종료까지</div><div class="kpi-val" id="ddayVal">--</div></div>
   </div>
 
   <div id="content"><div class="empty">랭킹을 불러오는 중...</div></div>
@@ -266,8 +265,8 @@ const AVATAR={
   medal3:{남:['avatars/medal_b_m','🥉'],여:['avatars/medal_b_f','🥉']},
   hundred:{남:['avatars/hundred_m','💯'],여:['avatars/hundred_f','💯']}
 };
-const MEDALS=[['1st%20place%20medal/3D/1st_place_medal_3d.png','🥇'],['2nd%20place%20medal/3D/2nd_place_medal_3d.png','🥈'],['3rd%20place%20medal/3D/3rd_place_medal_3d.png','🥉']];
-function fimg(path,fb,cls){return `<img class="${cls}" src="${FLUENT}${path}" alt="${fb}" loading="lazy" onerror="this.outerHTML='${fb}'">`;}
+const MEDALS=[['avatars/anim_m1.webp','🥇'],['avatars/anim_m2.webp','🥈'],['avatars/anim_m3.webp','🥉']];
+function fimg(path,fb,cls){const src=path.indexOf('avatars/')===0?path:FLUENT+path;return `<img class="${cls}" src="${src}" alt="${fb}" loading="lazy" onerror="this.outerHTML='${fb}'">`;}
 function avaOf(en,ctx,kind){
   const g=(en.g==='남')?'남':'여';
   const pair=(AVATAR[ctx]||AVATAR.r45)[g];
@@ -374,6 +373,7 @@ function render(){
     if(!r){out+='<div></div>';return;}
     out+=`<div class="pod p${realRank}">
       <div class="crown-f c${realRank}">${fimg('Crown/3D/crown_3d.png','👑','crownf-img')}</div>
+      ${realRank===1?'<img class="spark sp-l" src="avatars/anim_spark.webp" alt="" loading="lazy" onerror="this.remove()"><img class="spark sp-r" src="avatars/anim_spark.webp" alt="" loading="lazy" onerror="this.remove()">':''}
       <div class="pava" style="cursor:pointer;" onclick="showStu('${r.en.id}','${realRank===1?'r1':'r23'}')">${avaOf(r.en,realRank===1?'r1':'r23','face')}</div>
       <div><span class="name-pill">${esc(r.en.mask)}</span></div>
       <div class="pod-cls">${esc(r.en.cls)}</div>
@@ -458,7 +458,7 @@ function render(){
   const club=ranked
     .filter(r=>(r.en.tests||[]).some(t=>t.d>=wk[0]&&t.d<=wk[1]&&t.t>0&&t.s>=t.t))
     .sort((a,b)=>a.en.mask.localeCompare(b.en.mask,'ko'));
-  out+=`<div class="sec">${fimg('Hundred%20points/3D/hundred_points_3d.png','💯','sec-ico ico-pulse')} 이번 주 만점 클럽 <span class="tag">50개 중 50개 · 전원 등재</span></div><div class="club">`;
+  out+=`<div class="sec">${fimg('avatars/anim_100.webp','💯','sec-ico')} 이번 주 만점 클럽 <span class="tag">50개 중 50개 · 전원 등재</span></div><div class="club">`;
   if(club.length){
     out+=`<div class="club-pills${club.length>4?' collapsed':''}" id="clubPills">`;
     club.forEach(r=>{out+=`<span class="club-pill" style="cursor:pointer;" onclick="showStu('${r.en.id}','hundred')"><span class="pill-ava">${avaOf(r.en,'hundred','face')}</span> <span class="cp-name">${esc(r.en.mask)}</span> <small>${esc(r.en.cls)}</small></span>`;});
@@ -479,7 +479,7 @@ function render(){
   out+=`<div class="sec">${fimg('Wrapped%20gift/3D/wrapped_gift_3d.png','🎁','sec-ico ico-wiggle')} 럭키드로우</div>
   <div class="lucky">
     <div style="display:flex;align-items:center;gap:14px;">
-      <div class="lucky-ico">${fimg('Wrapped%20gift/3D/wrapped_gift_3d.png','🎁','lucky-img')}</div>
+      <div class="lucky-ico">${fimg('avatars/anim_party.webp','🎉','lucky-img')}</div>
       <div>
         <div class="lucky-title">평균 90% 지키면 선물 찬스!</div>
         <div class="lucky-desc">기간 평균 정답률 90% 이상 + 3주 이상 응시하면 자동 응모.<br>종료 후 추첨 1명 — 등수 상관없이 <b>모두 같은 확률!</b></div>
@@ -562,7 +562,7 @@ function runDraw(){
     if(t<2600){delay*=1.07;setTimeout(spin,delay);}
     else{
       stage.classList.add('draw-win');
-      stage.innerHTML='<div class="draw-roll">🎉 '+esc(winner.en.mask)+' 🎉</div><div class="draw-sub">'+esc(winner.en.cls)+' · 평균 '+winner.st.avg+'% — 축하합니다! 선생님께 선물 받아가세요 🎁</div>';
+      stage.innerHTML='<div class="draw-roll"><img class="draw-anim" src="avatars/anim_party.webp" alt="🎉" onerror="this.remove()"> '+esc(winner.en.mask)+' <img class="draw-anim" src="avatars/anim_bday.webp" alt="🎂" onerror="this.remove()"></div><div class="draw-sub">'+esc(winner.en.cls)+' · 평균 '+winner.st.avg+'% — 축하합니다! 선생님께 선물 받아가세요 🎁</div>';
       _drawing=false;
     }
   })();

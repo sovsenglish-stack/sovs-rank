@@ -138,12 +138,17 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 .empty{text-align:center;padding:44px 16px;color:var(--tx2);font-size:13px;line-height:1.8;}
 .foot{text-align:center;font-size:10.5px;color:var(--tx3);margin-top:22px;line-height:1.7;}
 .updated{font-size:10px;color:var(--tx3);text-align:right;margin-top:9px;}
+.crown-f{display:flex;justify-content:center;margin-bottom:-5px;animation:bob 2.8s ease-in-out infinite;position:relative;z-index:2;}
+.crownf-img{width:26px;height:26px;object-fit:contain;filter:drop-shadow(0 2px 3px rgba(0,0,0,.18));}
+.pod.p1 .crownf-img{width:32px;height:32px;}
+.pod.p2 .crownf-img{filter:grayscale(1) brightness(1.3) drop-shadow(0 2px 3px rgba(0,0,0,.18));}
+.pod.p3 .crownf-img{filter:sepia(1) saturate(2.6) hue-rotate(-22deg) brightness(.82) drop-shadow(0 2px 3px rgba(0,0,0,.18));}
 .pava{width:64px;height:64px;border-radius:50%;margin:0 auto;overflow:hidden;border:3px solid var(--card);box-shadow:var(--shadow);background:var(--pale);}
 .pod.p1 .pava{width:80px;height:80px;}
 .pod.p2 .pava{background:var(--mint);}
 .pod.p3 .pava{background:var(--peach);}
 .face-img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
-.sec-ico{width:19px;height:19px;object-fit:contain;flex-shrink:0;}
+.sec-ico{width:21px;height:21px;object-fit:contain;flex-shrink:0;margin-top:-2px;}
 .medal-img{width:24px;height:24px;object-fit:contain;vertical-align:middle;}
 .pill-img{width:15px;height:15px;object-fit:contain;vertical-align:-2px;}
 .lucky-img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.25));}
@@ -181,11 +186,11 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
   <details class="rules">
     <summary>📋 룰 안내 펼쳐보기</summary>
     <div class="rules-body">
-      <div><span class="rule-num">1</span><b>점수</b> = 정답률. 범위가 넓든 좁든, 자주 보든 가끔 보든 점수는 오직 <b>얼마나 정확히 맞혔나</b>로만 계산해요.</div>
-      <div style="margin-top:9px;"><span class="rule-num">2</span><b>주간 점수</b> = 그 주(월~일)에 본 시험들의 평균 정답률. 만점 주 = 100P. 단, 한 주를 통째로 빠지면 그 주는 <b>0P</b>!</div>
+      <div><span class="rule-num">1</span><b>점수</b> = 정답률. 범위·횟수 상관없이 <b>정확도</b>로만!</div>
+      <div style="margin-top:9px;"><span class="rule-num">2</span><b>주간 점수</b> = 그 주 평균 정답률 (만점 100P · 미응시 주 <b>0P</b>)</div>
       <div style="margin-top:9px;"><span class="rule-num">3</span><b>최종</b> = 4주 주간 점수 합산 (만점 400P). TOP 5까지 공개해요.</div>
       <div style="margin-top:9px;"><span class="rule-num">4</span><b>같은 점수라면?</b> 기간 동안 <b>누적 DAY(외운 단어 범위의 합)</b>가 많은 사람이 위! 넓은 범위에 도전하거나 자주 응시할수록 DAY가 쌓여요. 단, 범위를 넓히면 틀릴 위험도 커지니 전략적으로 🎯</div>
-      <div style="margin-top:9px;"><span class="rule-num">5</span><b>이번 주 TOP 3</b>는 매주 월요일 새로 시작! 누적 순위와 상관없이 그 주에 잘하면 누구나 오를 수 있어요.</div>
+      <div style="margin-top:9px;"><span class="rule-num">5</span><b>이번 주 TOP 3</b> — 매주 월요일 리셋, 누구에게나 새 기회!</div>
       <div style="margin-top:9px;"><span class="rule-num">6</span><b>만점 클럽</b> — 이번 주에 만점(50/50)을 받으면 인원 제한 없이 전원 이름이 올라가요.</div>
       <div style="margin-top:9px;"><span class="rule-num">7</span><b>럭키드로우</b> 🎁 — 기간 전체 평균 정답률 <b>90% 이상</b> + <b>3주 이상 응시</b>하면 자동 응모! 종료 후 이 페이지의 <b>추첨하기</b> 버튼으로 다 같이 보는 앞에서 추첨해요. 등수와 상관없이 모두 같은 확률!</div>
       <div class="rule-sum">한 줄 요약 — 정확하게 맞히는 게 점수, 많이 외우는 게 순위. 매주 빠지지 말기! 💪</div>
@@ -312,6 +317,7 @@ function render(){
     const realRank=pi===1?1:pi===0?2:3;
     if(!r){out+='<div></div>';return;}
     out+=`<div class="pod p${realRank}">
+      <div class="crown-f c${realRank}">${fimg('Crown/3D/crown_3d.png','👑','crownf-img')}</div>
       <div class="pava" style="cursor:pointer;" onclick="showStu('${r.en.id}','${realRank===1?'r1':'r23'}')">${avaOf(r.en,realRank===1?'r1':'r23','face')}</div>
       <div><span class="name-pill">${esc(r.en.mask)}</span></div>
       <div class="pod-cls">${esc(r.en.cls)}</div>
@@ -356,13 +362,16 @@ function render(){
     .slice(0,3);
   out+=`<div class="sec">${fimg('Fire/3D/fire_3d.png','🔥','sec-ico')} 이번 주 TOP 3 <span class="tag">${wi+1}주차 · 매주 월요일 리셋!</span></div>`;
   if(wTop.length){
-    out+='<div class="wtop">';
+    out+='<div class="table">';
+    out+='<div class="thead"><span style="text-align:center;">순위</span><span></span><span>이름</span><span>반</span><span style="text-align:right;">포인트</span><span style="text-align:right;">응시</span></div>';
     wTop.forEach((r,i)=>{
-      out+=`<div class="wrow">
-        <span class="w-rank">${fimg(MEDALS[i][0],MEDALS[i][1],'medal-img')}</span>
-        <div class="w-ava" style="cursor:pointer;" onclick="showStu('${r.en.id}','week')">${avaOf(r.en,'week','face')}</div>
-        <div><div class="w-name">${esc(r.en.mask)}</div><div class="w-cls">${esc(r.en.cls)}</div></div>
-        <div class="w-pts">${r.wp.p}P <small>${r.wp.ds||0}D</small></div>
+      out+=`<div class="trow">
+        <span class="t-rank">${fimg(MEDALS[i][0],MEDALS[i][1],'medal-img')}</span>
+        <div class="t-ava" style="cursor:pointer;" onclick="showStu('${r.en.id}','week')">${avaOf(r.en,'week','face')}</div>
+        <span class="t-name">${esc(r.en.mask)}</span>
+        <span class="t-cls">${esc(r.en.cls)}</span>
+        <span class="t-pts">${r.wp.p}P <span style="font-family:'Pretendard Variable',Pretendard,sans-serif;font-size:9.5px;color:var(--tx3);">${r.wp.ds||0}D</span></span>
+        <span class="t-chg">${r.wp.n}회</span>
       </div>`;
     });
     out+='</div>';

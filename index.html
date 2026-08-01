@@ -211,7 +211,7 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
   </div>
 
   <div class="kpi">
-    <div class="kpi-card"><img class="kpi-3d" src="avatars/anim_people.webp" alt="👥" onerror="this.outerHTML='👥'"><div class="kpi-lbl">참가 학생</div><div class="kpi-val" id="kpiN">--<small> 명</small></div></div>
+    <div class="kpi-card"><img class="kpi-3d" src="avatars/anim_people.webp" alt="👥" onerror="this.outerHTML='👥'"><div class="kpi-lbl">90% 유지 학생</div><div class="kpi-val" id="kpiN">--<small> 명</small></div></div>
     <div class="kpi-card"><img class="kpi-3d" src="avatars/anim_write.webp" alt="✍️" onerror="this.outerHTML='✍️'"><div class="kpi-lbl">총 응시</div><div class="kpi-val" id="kpiT">--<small> 회</small></div></div>
     <div class="kpi-card"><img class="kpi-3d" src="avatars/anim_cal.webp" alt="📅" onerror="this.outerHTML='📅'"><div class="kpi-lbl" id="ddayLbl">종료까지</div><div class="kpi-val" id="ddayVal">--</div></div>
   </div>
@@ -361,7 +361,7 @@ function render(){
       return b.st.cnt-a.st.cnt;
     });
 
-  countUp(document.getElementById('kpiN'),ranked.length,0,'<small> 명</small>');
+  countUp(document.getElementById('kpiN'),ranked.filter(r=>r.st.avg>=90).length,0,'<small> 명</small>');
   countUp(document.getElementById('kpiT'),ranked.reduce((a,r)=>a+r.st.cnt,0),0,'<small> 회</small>');
 
   /* ── 누적 TOP 3 시상대 ── */

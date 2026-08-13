@@ -194,6 +194,23 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
   .hd-brand-img{width:104px;}
   .thead,.trow{grid-template-columns:34px 34px minmax(0,1fr) 52px 74px 36px;padding:11px 10px;}
 }
+/* ══ FINAL 이펙트 ══ */
+.m-ava{position:relative;}
+.m-ava.final-gold{border-color:#F5B62E;box-shadow:0 0 0 3px rgba(245,182,46,.32),0 6px 18px rgba(245,182,46,.35);}
+.final-chip{display:inline-block;margin-top:6px;font-size:11px;font-weight:700;background:linear-gradient(90deg,#FFE9B8,#FFD97A);color:#8A5A00;border-radius:11px;padding:4px 12px;}
+.spark-wrap{position:absolute;inset:-13px;animation:sparkSpin 7s linear infinite;pointer-events:none;}
+.spark-wrap span{position:absolute;left:calc(50% - 6px);top:calc(50% - 8px);font-size:12px;color:#F5B62E;}
+@keyframes sparkSpin{to{transform:rotate(360deg);}}
+.fx-corner{position:fixed;width:76px;height:76px;z-index:300;pointer-events:none;}
+.conf-pc{position:fixed;top:-14px;z-index:299;pointer-events:none;border-radius:2px;animation:confFall linear forwards;}
+@keyframes confFall{to{transform:translateY(106vh) rotate(540deg);}}
+#finalOv{position:fixed;inset:0;background:radial-gradient(circle at 50% 32%,#2A1E5C,#161233 72%);z-index:400;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;cursor:pointer;animation:ovIn .5s ease;}
+#finalOv.hide{opacity:0;transition:opacity .45s;pointer-events:none;}
+#finalOv img{width:96px;height:96px;object-fit:contain;filter:drop-shadow(0 8px 24px rgba(245,182,46,.4));}
+#finalOv .fo-t{font-family:var(--num);font-weight:400;font-size:clamp(26px,6.5vw,40px);color:#fff;text-align:center;line-height:1.25;padding:0 20px;}
+#finalOv .fo-s{font-size:13px;color:#B9B4E0;text-align:center;padding:0 26px;line-height:1.6;}
+@keyframes ovIn{from{opacity:0;}}
+@media (prefers-reduced-motion: reduce){.spark-wrap{animation:none;}.conf-pc{display:none;}}
 </style>
 </head>
 <body>
@@ -366,6 +383,9 @@ function render(){
 
   /* ── 누적 TOP 3 시상대 ── */
   const top5=ranked.slice(0,6);
+  const _tds=(()=>{const t=new Date();return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;})();
+  window._ended=_tds>(_data?.period?.end||'2026-08-14');
+  window._finalRank={};ranked.slice(0,6).forEach((r,i)=>{window._finalRank[r.en.id]=i+1;});
   const top3=top5.slice(0,3);
   const podOrder=[top3[1],top3[0],top3[2]];
   let out=`<div class="sec">${fimg('Crown/3D/crown_3d.png','👑','sec-ico')} 누적 TOP 3</div><div class="podium">`;
@@ -525,10 +545,12 @@ function showStu(id,ctx){
       <span class="m-pts">${pts}%</span>
     </div>`;
   });
+  const fr=(window._ended&&window._finalRank&&window._finalRank[id])||0;
+  const sparks=fr?'<div class="spark-wrap">'+Array.from({length:8},(_,i)=>`<span style="transform:rotate(${i*45}deg) translateX(56px)">✦</span>`).join('')+'</div>':'';
   box.innerHTML=`
     <div class="m-hd">
-      <div class="m-ava">${avaOf(r.en,ctx||'r45','face')}</div>
-      <div><div class="m-name">${esc(r.en.mask)}</div><div class="m-cls">${esc(r.en.cls)}</div></div>
+      <div class="m-ava${fr?' final-gold':''}">${avaOf(r.en,ctx||'r45','face')}${sparks}</div>
+      <div><div class="m-name">${esc(r.en.mask)}</div><div class="m-cls">${esc(r.en.cls)}</div>${fr?`<div class="final-chip">🏆 2026 방학 단어 랭킹전 · 최종 ${fr}위</div>`:''}</div>
       <button class="m-close" onclick="closeStu()">✕</button>
     </div>
     <div class="m-sum">
@@ -539,8 +561,52 @@ function showStu(id,ctx){
     <div class="m-thead"><span>날짜</span><span>범위</span><span>점수</span><span>결과</span><span style="text-align:right;">정답률</span></div>
     ${rows}`;
   document.getElementById('modalBg').classList.add('on');
+  if(fr)_finalFx();
 }
 function closeStu(){document.getElementById('modalBg').classList.remove('on');}
+
+/* ══ FINAL: 모서리 폭죽 + 색종이 ══ */
+let _fxLock=false;
+function _finalFx(){
+  if(_fxLock)return;
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  _fxLock=true;setTimeout(()=>{_fxLock=false;},2600);
+  [{left:'6px',top:'6px'},{right:'6px',top:'6px'},{left:'6px',bottom:'6px'},{right:'6px',bottom:'6px'}].forEach(pos=>{
+    const im=document.createElement('img');
+    im.src='avatars/anim_party.webp';im.alt='';im.className='fx-corner';
+    Object.assign(im.style,pos);
+    document.body.appendChild(im);
+    setTimeout(()=>im.remove(),2200);
+  });
+  const cols=['#FF6384','#FFB732','#4CC98C','#548CFF','#BA68FA'];
+  for(let i=0;i<40;i++){
+    const p=document.createElement('div');p.className='conf-pc';
+    const s=4+Math.random()*6;
+    p.style.left=(Math.random()*100)+'vw';
+    p.style.width=s+'px';p.style.height=(s*(Math.random()<.5?1:1.8))+'px';
+    p.style.background=cols[i%5];
+    p.style.animationDuration=(1.4+Math.random()*1.2)+'s';
+    p.style.animationDelay=(Math.random()*0.4)+'s';
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),2800);
+  }
+}
+/* ══ FINAL: 진입 오버레이 (세션당 1회) ══ */
+function showFinalOverlay(){
+  if(!window._ended)return;
+  try{if(sessionStorage.getItem('sovsFinalSeen'))return;}catch(e){}
+  const ov=document.createElement('div');ov.id='finalOv';
+  ov.innerHTML=`<img src="avatars/trophy.webp" alt="🏆" onerror="this.outerHTML='<span style=\'font-size:72px\'>🏆</span>'">
+    <div class="fo-t">2026 방학 단어 랭킹전<br>FINAL</div>
+    <div class="fo-s">4주간의 대장정이 끝났어요! 최종 순위가 확정되었습니다<br>화면을 탭하면 결과를 볼 수 있어요</div>`;
+  ov.addEventListener('click',()=>{
+    ov.classList.add('hide');
+    setTimeout(()=>ov.remove(),500);
+    try{sessionStorage.setItem('sovsFinalSeen','1');}catch(e){}
+  });
+  document.body.appendChild(ov);
+  _finalFx();
+}
 
 let _drawing=false;
 function runDraw(){
@@ -584,6 +650,7 @@ async function init(){
   }
   renderDday(_data?.period||{start:'2026-07-20',end:'2026-08-14'});
   render();
+  showFinalOverlay();
 }
 init();
 </script>

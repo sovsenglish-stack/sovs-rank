@@ -222,7 +222,7 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
     <div>
       <img class="hd-brand-img" src="avatars/logo_wordmark.png" alt="SOVS ENGLISH" onerror="this.outerHTML='<div class=\'hd-brand\'>SOVS ENGLISH</div>'">
       <div class="hd-title">방학 단어 랭킹전</div>
-      <div class="hd-sub" id="heroSub">2026.07.20 – 08.14</div>
+      <div class="hd-sub" id="heroSub">2026.07.20 – 08.15</div>
       <div class="hd-upd" id="hdUpd"></div>
     </div>
   </div>
@@ -265,7 +265,7 @@ const DEFAULT_WEEKS=[
   ['2026-07-20','2026-07-26'],
   ['2026-07-27','2026-08-02'],
   ['2026-08-03','2026-08-09'],
-  ['2026-08-10','2026-08-14']
+  ['2026-08-10','2026-08-15']
 ];
 let _data=null,_weeks=DEFAULT_WEEKS;
 
@@ -384,7 +384,7 @@ function render(){
   /* ── 누적 TOP 3 시상대 ── */
   const top5=ranked.slice(0,6);
   const _tds=(()=>{const t=new Date();return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;})();
-  window._ended=_tds>(_data?.period?.end||'2026-08-14');
+  window._ended=_tds>(_data?.period?.end||'2026-08-15');
   window._finalRank={};ranked.slice(0,6).forEach((r,i)=>{window._finalRank[r.en.id]=i+1;});
   const top3=top5.slice(0,3);
   const podOrder=[top3[1],top3[0],top3[2]];
@@ -496,7 +496,7 @@ function render(){
     .filter(r=>r.st.avg>=90&&r.st.weekly.filter(w=>w.n>0).length>=3)
     .sort((a,b)=>a.en.id<b.en.id?-1:1);
   const todayStr=(()=>{const t=new Date();return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;})();
-  const ended=todayStr>(_data?.period?.end||'2026-08-14');
+  const ended=todayStr>(_data?.period?.end||'2026-08-15');
   out+=`<div class="sec">${fimg('Wrapped%20gift/3D/wrapped_gift_3d.png','🎁','sec-ico ico-wiggle')} 럭키드로우</div>
   <div class="lucky">
     <div style="display:flex;align-items:center;gap:14px;">
@@ -508,7 +508,7 @@ function render(){
         <div class="lucky-stat">지금 평균 90% 유지 중 <b>${keeping}</b>명</div>
       </div>
     </div>
-    <button class="draw-btn" id="drawBtn" ${ended?'':'disabled'} onclick="runDraw()">${ended?'🎲 추첨하기':'🔒 8/14 종료 후 추첨 오픈'}</button>
+    <button class="draw-btn" id="drawBtn" ${ended?'':'disabled'} onclick="runDraw()">${ended?'🎲 추첨하기':'🔒 8/15 종료 후 추첨 오픈'}</button>
     <div class="draw-stage" id="drawStage"></div>
   </div>`;
 
@@ -645,10 +645,10 @@ async function init(){
   }catch(e){
     console.warn('[랭킹] vocab_ranking 조회 실패 — 테이블 미생성 또는 첫 갱신 전이면 정상입니다. (ranking_setup.sql 실행 + 대시보드에서 랭킹 갱신 필요)', e?.message||e);
     document.getElementById('content').innerHTML='<div class="empty">아직 랭킹이 준비되지 않았어요.<br>곧 시작되니 조금만 기다려주세요!</div>';
-    renderDday({start:'2026-07-20',end:'2026-08-14'});
+    renderDday({start:'2026-07-20',end:'2026-08-15'});
     return;
   }
-  renderDday(_data?.period||{start:'2026-07-20',end:'2026-08-14'});
+  renderDday(_data?.period||{start:'2026-07-20',end:'2026-08-15'});
   render();
   showFinalOverlay();
 }

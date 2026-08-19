@@ -195,18 +195,21 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
   .thead,.trow{grid-template-columns:34px 34px minmax(0,1fr) 52px 74px 36px;padding:11px 10px;}
 }
 /* ══ 특별상 (종료 후) ══ */
-.sp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-@media (max-width:560px){.sp-grid{grid-template-columns:1fr;}}
-.sp-card{background:#FFFAF0;border:1px solid #F6E4B4;border-radius:16px;padding:16px 12px 14px;text-align:center;cursor:pointer;transition:transform .15s;position:relative;animation:rise .5s ease both;}
-.sp-card:active{transform:scale(.97);}
-.sp-medal{position:absolute;top:10px;left:calc(50% + 18px);width:30px;height:30px;object-fit:contain;z-index:2;}
-.sp-ava{width:92px;height:92px;margin:0 auto;border-radius:50%;overflow:hidden;background:#FFF3D6;border:3px solid #F5B62E;box-shadow:0 4px 12px rgba(245,182,46,.25);}
+.sp-wrap{display:flex;flex-wrap:wrap;gap:9px;}
+.sp-pill{display:flex;align-items:center;gap:10px;background:#FFFAF0;border:1px solid #F6E4B4;border-radius:29px;padding:8px 16px 8px 8px;cursor:pointer;transition:transform .15s;animation:rise .5s ease both;}
+.sp-pill:active{transform:scale(.97);}
+.sp-ava{width:42px;height:42px;flex-shrink:0;border-radius:50%;overflow:hidden;background:#FFF3D6;border:2px solid #F5B62E;}
 .sp-ava img{width:100%;height:100%;object-fit:cover;display:block;}
-.sp-name{font-family:var(--num);font-size:17px;color:var(--tx);margin-top:10px;}
-.sp-cls{font-size:11px;color:var(--tx2);margin-top:3px;}
-.sp-chip{display:inline-block;margin-top:9px;font-size:11px;font-weight:700;background:linear-gradient(90deg,#FFE9B8,#FFD97A);color:#8A5A00;border-radius:11px;padding:4px 12px;}
-.sp-stat{font-size:11px;color:var(--tx2);margin-top:8px;line-height:1.55;}
-.sp-note{font-size:11px;color:var(--tx3);margin-top:10px;text-align:center;}
+.sp-pill>div:last-child{min-width:0;}
+.sp-l1{font-family:var(--num);font-size:13px;color:var(--tx);white-space:nowrap;}
+.sp-tag{font-family:var(--font);font-size:10px;font-weight:700;color:#B8860B;margin-left:3px;}
+.sp-l2{font-size:9.5px;color:var(--tx2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sp-note{font-size:10.5px;color:var(--tx3);margin-top:9px;text-align:center;}
+@media (max-width:560px){
+  .sp-pill{width:100%;box-sizing:border-box;}
+  .sp-l1{white-space:normal;}
+  .sp-l2{white-space:normal;overflow:visible;line-height:1.45;}
+}
 /* ══ FINAL 이펙트 ══ */
 .m-ava{position:relative;}
 .m-ava.final-gold{border-color:#F5B62E;box-shadow:0 0 0 3px rgba(245,182,46,.32),0 6px 18px rgba(245,182,46,.35);}
@@ -513,19 +516,18 @@ function render(){
     const spCards=SP.map((sp,i)=>{
       const r=ranked.find(x=>x.en.id===sp.id);
       if(!r)return '';
-      return `<div class="sp-card" style="animation-delay:${i*0.08}s" onclick="showStu('${r.en.id}')">
-        <img class="sp-medal" src="avatars/anim_m1.webp" alt="🏅" onerror="this.remove()">
+      return `<div class="sp-pill" style="animation-delay:${i*0.08}s" onclick="showStu('${r.en.id}')">
         <div class="sp-ava">${avaOf(r.en,'hundred','face')}</div>
-        <div class="sp-name">${esc(r.en.mask)}</div>
-        <div class="sp-cls">${esc(r.en.cls)}</div>
-        <div class="sp-chip">${sp.chip}</div>
-        <div class="sp-stat">${sp.line(r)}</div>
+        <div>
+          <div class="sp-l1">${esc(r.en.mask)}<span class="sp-tag">${sp.chip}</span></div>
+          <div class="sp-l2">${esc(r.en.cls)} · ${sp.line(r)}</div>
+        </div>
       </div>`;
     }).join('');
     if(spCards){
       out+=`<div class="sec">${fimg('Trophy/3D/trophy_3d.png','🏆','sec-ico ico-wiggle')} 원장선생님 특별상</div>
-      <div class="card" style="padding:14px;">
-        <div class="sp-grid">${spCards}</div>
+      <div class="card" style="padding:13px 14px;">
+        <div class="sp-wrap">${spCards}</div>
         <div class="sp-note">시상대 밖에서 가장 뜨거웠던 세 사람 — 원장선생님이 직접 선정했어요 🎖️</div>
       </div>`;
     }

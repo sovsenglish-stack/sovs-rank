@@ -294,7 +294,8 @@ const AVATAR={
   medal1:{남:['avatars/medal_g_m','🥇'],여:['avatars/medal_g_f','🥇']},
   medal2:{남:['avatars/medal_s_m','🥈'],여:['avatars/medal_s_f','🥈']},
   medal3:{남:['avatars/medal_b_m','🥉'],여:['avatars/medal_b_f','🥉']},
-  hundred:{남:['avatars/hundred_m','💯'],여:['avatars/hundred_f','💯']}
+  hundred:{남:['avatars/hundred_m','💯'],여:['avatars/hundred_f','💯']},
+  sp:{남:['avatars/sp_m','📚'],여:['avatars/sp_f','📚']}
 };
 const MEDALS=[['avatars/anim_m1.webp','🥇'],['avatars/anim_m2.webp','🥈'],['avatars/anim_m3.webp','🥉']];
 function fimg(path,fb,cls){const src=path.indexOf('avatars/')===0?path:FLUENT+path;return `<img class="${cls}" src="${src}" alt="${fb}" loading="lazy" onerror="this.outerHTML='${fb}'">`;}
@@ -514,15 +515,15 @@ function render(){
       const r=ranked.find(x=>x.en.id===sp.id);
       if(!r)return '';
       return `<div class="sp-row" style="animation-delay:${i*0.07}s" onclick="showStu('${r.en.id}')">
-        <span class="sp-bu"><img src="avatars/anim_rocket.webp" alt="🚀" loading="lazy" onerror="this.outerHTML='🚀'">${sp.award}</span>
-        <span class="sp-who"><span class="t-ava">${avaOf(r.en,'hundred','face')}</span><b>${esc(r.en.mask)}</b></span>
-        <span class="t-cls">${esc(r.en.cls)}</span>
-        <span class="sp-rec"><div class="v">${sp.v(r)}</div><div class="s">${sp.s(r)}</div></span>
+        <div class="sp-bu"><img src="avatars/anim_rocket.webp" alt="🚀" loading="lazy" onerror="this.outerHTML='🚀'">${sp.award}</div>
+        <div class="sp-who"><span class="t-ava">${avaOf(r.en,'sp','face')}</span><b>${esc(r.en.mask)}</b></div>
+        <div class="t-cls">${esc(r.en.cls)}</div>
+        <div class="sp-rec"><div class="v">${sp.v(r)}</div><div class="s">${sp.s(r)}</div></div>
       </div>`;
     }).join('');
     if(spRows){
       out+=`<div class="sec">${fimg('Trophy/3D/trophy_3d.png','🏆','sec-ico ico-wiggle')} 원장선생님 특별상</div>
-      <div class="card" style="padding:0;">
+      <div class="table">
         <div class="sp-head"><span>부문</span><span>이름</span><span>반</span><span style="text-align:right;">기록</span></div>
         ${spRows}
       </div>`;

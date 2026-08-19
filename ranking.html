@@ -195,8 +195,8 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
   .thead,.trow{grid-template-columns:34px 34px minmax(0,1fr) 52px 74px 36px;padding:11px 10px;}
 }
 /* ══ 특별상 (종료 후) ══ */
-.sp-wrap{display:flex;flex-wrap:wrap;gap:9px;}
-.sp-pill{display:flex;align-items:center;gap:10px;background:#FFFAF0;border:1px solid #F6E4B4;border-radius:29px;padding:8px 16px 8px 8px;cursor:pointer;transition:transform .15s;animation:rise .5s ease both;}
+.sp-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.sp-pill{display:flex;align-items:center;gap:9px;background:#FFFAF0;border:1px solid #F6E4B4;border-radius:29px;padding:8px 12px 8px 8px;cursor:pointer;transition:transform .15s;animation:rise .5s ease both;min-width:0;}
 .sp-pill:active{transform:scale(.97);}
 .sp-ava{width:42px;height:42px;flex-shrink:0;border-radius:50%;overflow:hidden;background:#FFF3D6;border:2px solid #F5B62E;}
 .sp-ava img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -206,7 +206,7 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 .sp-l2{font-size:9.5px;color:var(--tx2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .sp-note{font-size:10.5px;color:var(--tx3);margin-top:9px;text-align:center;}
 @media (max-width:560px){
-  .sp-pill{width:100%;box-sizing:border-box;}
+  .sp-wrap{grid-template-columns:1fr;}
   .sp-l1{white-space:normal;}
   .sp-l2{white-space:normal;overflow:visible;line-height:1.45;}
 }
@@ -511,7 +511,7 @@ function render(){
     const SP=[
       {id:'668c60d3504e0555413bb939ec6d3a05b0a1b5057a991c378adec849ed9c4107',chip:'🔁 최다 응시상',line:r=>`${r.st.cnt}회 응시 · 평균 ${r.st.avg}%`},
       {id:'3521c95ac2cc803db092fa9ee280d78860f2bf58851c791cddc1e3621d01cf7a',chip:'📚 최대 범위상',line:r=>`${r.st.tdays} DAY 완주 · 평균 ${r.st.avg}%`},
-      {id:'4294b39043a677b25a1e1d7a3f75653c05cff6352f8445beba70e14817a3b438',chip:'🎯 아차상',line:r=>{const idx=ranked.findIndex(x=>x.en.id===r.en.id);return `최종 ${idx+1}위 · 시상대와 0.5P 차`;}},
+      {id:'4294b39043a677b25a1e1d7a3f75653c05cff6352f8445beba70e14817a3b438',chip:'🎯 아차상',line:r=>{const idx=ranked.findIndex(x=>x.en.id===r.en.id);return `최종 ${idx+1}위 · 0.5P 차`;}},
     ];
     const spCards=SP.map((sp,i)=>{
       const r=ranked.find(x=>x.en.id===sp.id);
@@ -528,7 +528,6 @@ function render(){
       out+=`<div class="sec">${fimg('Trophy/3D/trophy_3d.png','🏆','sec-ico ico-wiggle')} 원장선생님 특별상</div>
       <div class="card" style="padding:13px 14px;">
         <div class="sp-wrap">${spCards}</div>
-        <div class="sp-note">시상대 밖에서 가장 뜨거웠던 세 사람 — 원장선생님이 직접 선정했어요 🎖️</div>
       </div>`;
     }
   }

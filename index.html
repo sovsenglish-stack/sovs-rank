@@ -210,7 +210,10 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 /* ══ FINAL 이펙트 ══ */
 .m-ava{position:relative;}
 .m-ava.final-gold{border-color:#F5B62E;box-shadow:0 0 0 3px rgba(245,182,46,.32),0 6px 18px rgba(245,182,46,.35);}
-.final-chip{display:inline-block;margin-top:6px;font-size:11px;font-weight:700;background:linear-gradient(90deg,#FFE9B8,#FFD97A);color:#8A5A00;border-radius:11px;padding:4px 12px;}
+.final-chip{display:inline-flex;align-items:center;gap:8px;margin-top:6px;font-size:11px;font-weight:700;background:linear-gradient(90deg,#FFE9B8,#FFD97A);color:#8A5A00;border-radius:13px;padding:6px 13px;}
+.final-chip .fc-t{font-size:19px;line-height:1;}
+.final-chip .fc-x{display:flex;flex-direction:column;align-items:center;line-height:1.4;text-align:center;}
+.final-chip .fc-r{font-size:12px;}
 .spark-wrap{position:absolute;inset:-13px;animation:sparkSpin 7s linear infinite;pointer-events:none;}
 .spark-wrap span{position:absolute;left:calc(50% - 6px);top:calc(50% - 8px);font-size:12px;color:#F5B62E;}
 @keyframes sparkSpin{to{transform:rotate(360deg);}}
@@ -590,7 +593,7 @@ function showStu(id,ctx){
   box.innerHTML=`
     <div class="m-hd">
       <div class="m-ava${fr?' final-gold':''}">${avaOf(r.en,ctx||'r45','face')}${sparks}</div>
-      <div><div class="m-name">${esc(r.en.mask)}</div><div class="m-cls">${esc(r.en.cls)}</div>${fr?`<div class="final-chip">🏆 2026 방학 단어 랭킹전 · 최종 ${fr}위</div>`:''}</div>
+      <div><div class="m-name">${esc(r.en.mask)}</div><div class="m-cls">${esc(r.en.cls)}</div>${fr?`<div class="final-chip"><span class="fc-t">🏆</span><span class="fc-x"><span>2026 방학 단어 랭킹전</span><span class="fc-r">최종 ${fr}위</span></span></div>`:''}</div>
       <button class="m-close" onclick="closeStu()">✕</button>
     </div>
     <div class="m-sum">

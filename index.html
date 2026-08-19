@@ -194,6 +194,17 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
   .hd-brand-img{width:104px;}
   .thead,.trow{grid-template-columns:34px 34px minmax(0,1fr) 52px 74px 36px;padding:11px 10px;}
 }
+/* ══ 특별상 (종료 후) ══ */
+.sp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+@media (max-width:560px){.sp-grid{grid-template-columns:1fr;}}
+.sp-card{background:#FFFAF0;border:1px solid #F6E4B4;border-radius:16px;padding:16px 12px 14px;text-align:center;cursor:pointer;transition:transform .15s;position:relative;animation:rise .5s ease both;}
+.sp-card:active{transform:scale(.97);}
+.sp-medal{position:absolute;top:10px;left:calc(50% + 18px);width:30px;height:30px;object-fit:contain;}
+.sp-name{font-family:var(--num);font-size:17px;color:var(--tx);margin-top:10px;}
+.sp-cls{font-size:11px;color:var(--tx2);margin-top:3px;}
+.sp-chip{display:inline-block;margin-top:9px;font-size:11px;font-weight:700;background:linear-gradient(90deg,#FFE9B8,#FFD97A);color:#8A5A00;border-radius:11px;padding:4px 12px;}
+.sp-stat{font-size:11px;color:var(--tx2);margin-top:8px;line-height:1.55;}
+.sp-note{font-size:11px;color:var(--tx3);margin-top:10px;text-align:center;}
 /* ══ FINAL 이펙트 ══ */
 .m-ava{position:relative;}
 .m-ava.final-gold{border-color:#F5B62E;box-shadow:0 0 0 3px rgba(245,182,46,.32),0 6px 18px rgba(245,182,46,.35);}
@@ -489,6 +500,34 @@ function render(){
     out+='<div class="club-empty">아직 이번 주 만점자가 없어요.<br>첫 주인공이 되어보세요! ✨</div>';
   }
   out+='</div>';
+
+  /* ── 원장선생님 특별상 (종료 후 표시) ── */
+  if(window._ended){
+    const SP=[
+      {id:'668c60d3504e0555413bb939ec6d3a05b0a1b5057a991c378adec849ed9c4107',chip:'🔁 최다 응시상',line:r=>`${r.st.cnt}회 응시 · 평균 ${r.st.avg}%`},
+      {id:'3521c95ac2cc803db092fa9ee280d78860f2bf58851c791cddc1e3621d01cf7a',chip:'📚 최대 범위상',line:r=>`${r.st.tdays} DAY 완주 · 평균 ${r.st.avg}%`},
+      {id:'4294b39043a677b25a1e1d7a3f75653c05cff6352f8445beba70e14817a3b438',chip:'🎯 아차상',line:r=>{const idx=ranked.findIndex(x=>x.en.id===r.en.id);return `최종 ${idx+1}위 · 시상대와 0.5P 차`;}},
+    ];
+    const spCards=SP.map((sp,i)=>{
+      const r=ranked.find(x=>x.en.id===sp.id);
+      if(!r)return '';
+      return `<div class="sp-card" style="animation-delay:${i*0.08}s" onclick="showStu('${r.en.id}')">
+        <img class="sp-medal" src="avatars/anim_m1.webp" alt="🏅" onerror="this.remove()">
+        ${avaOf(r.en,'hundred','face')}
+        <div class="sp-name">${esc(r.en.mask)}</div>
+        <div class="sp-cls">${esc(r.en.cls)}</div>
+        <div class="sp-chip">${sp.chip}</div>
+        <div class="sp-stat">${sp.line(r)}</div>
+      </div>`;
+    }).join('');
+    if(spCards){
+      out+=`<div class="sec">${fimg('Trophy/3D/trophy_3d.png','🏆','sec-ico ico-wiggle')} 원장선생님 특별상</div>
+      <div class="card" style="padding:14px;">
+        <div class="sp-grid">${spCards}</div>
+        <div class="sp-note">시상대 밖에서 가장 뜨거웠던 세 사람 — 원장선생님이 직접 선정했어요 🎖️</div>
+      </div>`;
+    }
+  }
 
   /* ── 럭키드로우 (시드 기반: 누가 눌러도 같은 당첨자) ── */
   const keeping=ranked.filter(r=>r.st.avg>=90).length;

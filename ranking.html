@@ -196,19 +196,16 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 }
 /* ══ 특별상 (종료 후) ══ */
 .sp-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.sp-pill{display:flex;align-items:center;gap:9px;background:#FFFAF0;border:1px solid #F6E4B4;border-radius:29px;padding:8px 12px 8px 8px;cursor:pointer;transition:transform .15s;animation:rise .5s ease both;min-width:0;}
+.sp-pill{display:flex;align-items:center;gap:11px;background:#FFFAF0;border:1px solid #F6E4B4;border-radius:15px;padding:13px 12px;cursor:pointer;transition:transform .15s;animation:rise .5s ease both;min-width:0;}
 .sp-pill:active{transform:scale(.97);}
-.sp-ava{width:42px;height:42px;flex-shrink:0;border-radius:50%;overflow:hidden;background:#FFF3D6;border:2px solid #F5B62E;}
+.sp-ava{width:44px;height:44px;flex-shrink:0;border-radius:50%;overflow:hidden;background:#FFF3D6;border:2px solid #F5B62E;}
 .sp-ava img{width:100%;height:100%;object-fit:cover;display:block;}
 .sp-pill>div:last-child{min-width:0;}
-.sp-l1{font-family:var(--num);font-size:13px;color:var(--tx);white-space:nowrap;}
-.sp-tag{font-family:var(--font);font-size:10px;font-weight:700;color:#B8860B;margin-left:3px;}
-.sp-l2{font-size:9.5px;color:var(--tx2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.sp-note{font-size:10.5px;color:var(--tx3);margin-top:9px;text-align:center;}
+.sp-l0{font-size:11px;font-weight:700;color:#B8860B;}
+.sp-l1{font-family:var(--num);font-size:13px;color:var(--tx);margin-top:4px;}
+.sp-l2{font-size:9.5px;color:var(--tx2);margin-top:4px;}
 @media (max-width:560px){
   .sp-wrap{grid-template-columns:1fr;}
-  .sp-l1{white-space:normal;}
-  .sp-l2{white-space:normal;overflow:visible;line-height:1.45;}
 }
 /* ══ FINAL 이펙트 ══ */
 .m-ava{position:relative;}
@@ -519,8 +516,9 @@ function render(){
       return `<div class="sp-pill" style="animation-delay:${i*0.08}s" onclick="showStu('${r.en.id}')">
         <div class="sp-ava">${avaOf(r.en,'hundred','face')}</div>
         <div>
-          <div class="sp-l1">${esc(r.en.mask)}<span class="sp-tag">${sp.chip}</span></div>
-          <div class="sp-l2">${esc(r.en.cls)} · ${sp.line(r)}</div>
+          <div class="sp-l0">${sp.chip}</div>
+          <div class="sp-l1">${esc(r.en.mask)} · ${esc(r.en.cls)}</div>
+          <div class="sp-l2">${sp.line(r)}</div>
         </div>
       </div>`;
     }).join('');

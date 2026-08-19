@@ -199,7 +199,9 @@ body{font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR',s
 @media (max-width:560px){.sp-grid{grid-template-columns:1fr;}}
 .sp-card{background:#FFFAF0;border:1px solid #F6E4B4;border-radius:16px;padding:16px 12px 14px;text-align:center;cursor:pointer;transition:transform .15s;position:relative;animation:rise .5s ease both;}
 .sp-card:active{transform:scale(.97);}
-.sp-medal{position:absolute;top:10px;left:calc(50% + 18px);width:30px;height:30px;object-fit:contain;}
+.sp-medal{position:absolute;top:10px;left:calc(50% + 18px);width:30px;height:30px;object-fit:contain;z-index:2;}
+.sp-ava{width:92px;height:92px;margin:0 auto;border-radius:50%;overflow:hidden;background:#FFF3D6;border:3px solid #F5B62E;box-shadow:0 4px 12px rgba(245,182,46,.25);}
+.sp-ava img{width:100%;height:100%;object-fit:cover;display:block;}
 .sp-name{font-family:var(--num);font-size:17px;color:var(--tx);margin-top:10px;}
 .sp-cls{font-size:11px;color:var(--tx2);margin-top:3px;}
 .sp-chip{display:inline-block;margin-top:9px;font-size:11px;font-weight:700;background:linear-gradient(90deg,#FFE9B8,#FFD97A);color:#8A5A00;border-radius:11px;padding:4px 12px;}
@@ -513,7 +515,7 @@ function render(){
       if(!r)return '';
       return `<div class="sp-card" style="animation-delay:${i*0.08}s" onclick="showStu('${r.en.id}')">
         <img class="sp-medal" src="avatars/anim_m1.webp" alt="🏅" onerror="this.remove()">
-        ${avaOf(r.en,'hundred','face')}
+        <div class="sp-ava">${avaOf(r.en,'hundred','face')}</div>
         <div class="sp-name">${esc(r.en.mask)}</div>
         <div class="sp-cls">${esc(r.en.cls)}</div>
         <div class="sp-chip">${sp.chip}</div>

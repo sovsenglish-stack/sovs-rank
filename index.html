@@ -514,7 +514,7 @@ function render(){
     const spRows=SP.map((sp,i)=>{
       const r=ranked.find(x=>x.en.id===sp.id);
       if(!r)return '';
-      return `<div class="sp-row" style="animation-delay:${i*0.07}s" onclick="showStu('${r.en.id}')">
+      return `<div class="sp-row" style="animation-delay:${i*0.07}s" onclick="showStu('${r.en.id}','sp')">
         <div class="sp-bu"><img src="avatars/anim_rocket.webp" alt="🚀" loading="lazy" onerror="this.outerHTML='🚀'">${sp.award}</div>
         <div class="sp-who"><span class="t-ava">${avaOf(r.en,'sp','face')}</span><b>${esc(r.en.mask)}</b></div>
         <div class="t-cls">${esc(r.en.cls)}</div>
